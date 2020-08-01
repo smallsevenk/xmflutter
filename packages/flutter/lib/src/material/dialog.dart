@@ -26,7 +26,8 @@ import 'theme_data.dart';
 // enum Department { treasury, state }
 // BuildContext context;
 
-const EdgeInsets _defaultInsetPadding = EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
+const EdgeInsets _defaultInsetPadding =
+    EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
 
 /// A material design dialog.
 ///
@@ -55,8 +56,8 @@ class Dialog extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.shape,
     this.child,
-  }) : assert(clipBehavior != null),
-       super(key: key);
+  })  : assert(clipBehavior != null),
+        super(key: key);
 
   /// {@template flutter.material.dialog.backgroundColor}
   /// The background color of the surface of this [Dialog].
@@ -128,13 +129,15 @@ class Dialog extends StatelessWidget {
 
   // TODO(johnsonmh): Update default dialog border radius to 4.0 to match material spec.
   static const RoundedRectangleBorder _defaultDialogShape =
-    RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2.0)));
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)));
   static const double _defaultElevation = 24.0;
 
   @override
   Widget build(BuildContext context) {
     final DialogTheme dialogTheme = DialogTheme.of(context);
-    final EdgeInsets effectivePadding = MediaQuery.of(context).viewInsets + (insetPadding ?? const EdgeInsets.all(0.0));
+    final EdgeInsets effectivePadding = MediaQuery.of(context).viewInsets +
+        (insetPadding ?? const EdgeInsets.all(0.0));
     return AnimatedPadding(
       padding: effectivePadding,
       duration: insetAnimationDuration,
@@ -149,8 +152,11 @@ class Dialog extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minWidth: 280.0),
             child: Material(
-              color: backgroundColor ?? dialogTheme.backgroundColor ?? Theme.of(context).dialogBackgroundColor,
-              elevation: elevation ?? dialogTheme.elevation ?? _defaultElevation,
+              color: backgroundColor ??
+                  dialogTheme.backgroundColor ??
+                  Theme.of(context).dialogBackgroundColor,
+              elevation:
+                  elevation ?? dialogTheme.elevation ?? _defaultElevation,
               shape: shape ?? dialogTheme.shape ?? _defaultDialogShape,
               type: MaterialType.card,
               clipBehavior: clipBehavior,
@@ -260,9 +266,9 @@ class AlertDialog extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.shape,
     this.scrollable = false,
-  }) : assert(contentPadding != null),
-       assert(clipBehavior != null),
-       super(key: key);
+  })  : assert(contentPadding != null),
+        assert(clipBehavior != null),
+        super(key: key);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -440,13 +446,11 @@ class AlertDialog extends StatelessWidget {
   /// to overflow. Both [title] and [content] are wrapped in a scroll view,
   /// allowing all overflowed content to be visible while still showing the
   /// button bar.
-  @Deprecated(
-    'Set scrollable to `true`. This parameter will be removed and '
-    'was introduced to migrate AlertDialog to be scrollable by '
-    'default. For more information, see '
-    'https://flutter.dev/docs/release/breaking-changes/scrollable_alert_dialog. '
-    'This feature was deprecated after v1.13.2.'
-  )
+  @Deprecated('Set scrollable to `true`. This parameter will be removed and '
+      'was introduced to migrate AlertDialog to be scrollable by '
+      'default. For more information, see '
+      'https://flutter.dev/docs/release/breaking-changes/scrollable_alert_dialog. '
+      'This feature was deprecated after v1.13.2.')
   final bool scrollable;
 
   @override
@@ -466,7 +470,8 @@ class AlertDialog extends StatelessWidget {
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          label = semanticLabel ?? MaterialLocalizations.of(context)?.alertDialogLabel;
+          label = semanticLabel ??
+              MaterialLocalizations.of(context)?.alertDialogLabel;
       }
     }
 
@@ -474,10 +479,13 @@ class AlertDialog extends StatelessWidget {
     Widget contentWidget;
     Widget actionsWidget;
     if (title != null)
-     titleWidget = Padding(
-        padding: titlePadding ?? EdgeInsets.fromLTRB(24.0, 24.0, 24.0, content == null ? 20.0 : 0.0),
+      titleWidget = Padding(
+        padding: titlePadding ??
+            EdgeInsets.fromLTRB(24.0, 24.0, 24.0, content == null ? 20.0 : 0.0),
         child: DefaultTextStyle(
-          style: titleTextStyle ?? dialogTheme.titleTextStyle ?? theme.textTheme.headline6,
+          style: titleTextStyle ??
+              dialogTheme.titleTextStyle ??
+              theme.textTheme.headline6,
           child: Semantics(
             child: title,
             namesRoute: true,
@@ -490,7 +498,9 @@ class AlertDialog extends StatelessWidget {
       contentWidget = Padding(
         padding: contentPadding,
         child: DefaultTextStyle(
-          style: contentTextStyle ?? dialogTheme.contentTextStyle ?? theme.textTheme.subtitle1,
+          style: contentTextStyle ??
+              dialogTheme.contentTextStyle ??
+              theme.textTheme.subtitle1,
           child: content,
         ),
       );
@@ -516,25 +526,19 @@ class AlertDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  if (title != null)
-                    titleWidget,
-                  if (content != null)
-                    contentWidget,
+                  if (title != null) titleWidget,
+                  if (content != null) contentWidget,
                 ],
               ),
             ),
           ),
-        if (actions != null)
-          actionsWidget,
+        if (actions != null) actionsWidget,
       ];
     } else {
       columnChildren = <Widget>[
-        if (title != null)
-          titleWidget,
-        if (content != null)
-          Flexible(child: contentWidget),
-        if (actions != null)
-          actionsWidget,
+        if (title != null) titleWidget,
+        if (content != null) Flexible(child: contentWidget),
+        if (actions != null) actionsWidget,
       ];
     }
 
@@ -626,7 +630,8 @@ class SimpleDialogOption extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Padding(
-        padding: padding ?? const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+        padding: padding ??
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
         child: child,
       ),
     );
@@ -718,9 +723,9 @@ class SimpleDialog extends StatelessWidget {
     this.elevation,
     this.semanticLabel,
     this.shape,
-  }) : assert(titlePadding != null),
-       assert(contentPadding != null),
-       super(key: key);
+  })  : assert(titlePadding != null),
+        assert(contentPadding != null),
+        super(key: key);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -798,7 +803,8 @@ class SimpleDialog extends StatelessWidget {
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          label = semanticLabel ?? MaterialLocalizations.of(context)?.dialogLabel;
+          label =
+              semanticLabel ?? MaterialLocalizations.of(context)?.dialogLabel;
       }
     }
 
@@ -845,7 +851,11 @@ class SimpleDialog extends StatelessWidget {
   }
 }
 
-Widget _buildMaterialDialogTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+Widget _buildMaterialDialogTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child) {
   return FadeTransition(
     opacity: CurvedAnimation(
       parent: animation,
@@ -896,18 +906,19 @@ Widget _buildMaterialDialogTransitions(BuildContext context, Animation<double> a
 ///  * [showGeneralDialog], which allows for customization of the dialog popup.
 ///  * <https://material.io/design/components/dialogs.html>
 Future<T> showDialog<T>({
-  @required BuildContext context,
+  @required
+      BuildContext context,
   bool barrierDismissible = true,
   @Deprecated(
-    'Instead of using the "child" argument, return the child from a closure '
-    'provided to the "builder" argument. This will ensure that the BuildContext '
-    'is appropriate for widgets built in the dialog. '
-    'This feature was deprecated after v0.2.3.'
-  )
-  Widget child,
+      'Instead of using the "child" argument, return the child from a closure '
+      'provided to the "builder" argument. This will ensure that the BuildContext '
+      'is appropriate for widgets built in the dialog. '
+      'This feature was deprecated after v0.2.3.')
+      Widget child,
   WidgetBuilder builder,
   bool useRootNavigator = true,
   RouteSettings routeSettings,
+  Color barrierColor = Colors.black54,
 }) {
   assert(child == null || builder == null);
   assert(useRootNavigator != null);
@@ -916,21 +927,20 @@ Future<T> showDialog<T>({
   final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
   return showGeneralDialog(
     context: context,
-    pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+    pageBuilder: (BuildContext buildContext, Animation<double> animation,
+        Animation<double> secondaryAnimation) {
       final Widget pageChild = child ?? Builder(builder: builder);
       return SafeArea(
-        child: Builder(
-          builder: (BuildContext context) {
-            return theme != null
-                ? Theme(data: theme, child: pageChild)
-                : pageChild;
-          }
-        ),
+        child: Builder(builder: (BuildContext context) {
+          return theme != null
+              ? Theme(data: theme, child: pageChild)
+              : pageChild;
+        }),
       );
     },
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    barrierColor: Colors.black54,
+    barrierColor: barrierColor,
     transitionDuration: const Duration(milliseconds: 150),
     transitionBuilder: _buildMaterialDialogTransitions,
     useRootNavigator: useRootNavigator,

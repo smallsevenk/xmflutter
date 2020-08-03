@@ -3717,7 +3717,6 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
     while (
         !predicate(_history.lastWhere(_RouteEntry.isPresentPredicate).route)) {
       pop();
-      print('pop');
     }
   }
 

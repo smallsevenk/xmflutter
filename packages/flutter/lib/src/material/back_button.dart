@@ -25,7 +25,7 @@ import 'theme.dart';
 class BackButtonIcon extends StatelessWidget {
   /// Creates an icon that shows the appropriate "back" image for
   /// the current platform (as obtained from the [Theme]).
-  const BackButtonIcon({ Key key }) : super(key: key);
+  const BackButtonIcon({Key key}) : super(key: key);
 
   /// Returns the appropriate "back" icon for the given `platform`.
   static IconData _getIconData(TargetPlatform platform) {
@@ -44,7 +44,8 @@ class BackButtonIcon extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => Icon(_getIconData(Theme.of(context).platform));
+  Widget build(BuildContext context) =>
+      Icon(_getIconData(Theme.of(context).platform));
 }
 
 /// A material design back button.
@@ -76,7 +77,7 @@ class BackButtonIcon extends StatelessWidget {
 class BackButton extends StatelessWidget {
   /// Creates an [IconButton] with the appropriate "back" icon for the current
   /// target platform.
-  const BackButton({ Key key, this.color, this.onPressed }) : super(key: key);
+  const BackButton({Key key, this.color, this.onPressed}) : super(key: key);
 
   /// The color to use for the icon.
   ///
@@ -130,13 +131,16 @@ class BackButton extends StatelessWidget {
 ///  * [IconButton], to create other material design icon buttons.
 class CloseButton extends StatelessWidget {
   /// Creates a Material Design close button.
-  const CloseButton({ Key key, this.color, this.onPressed }) : super(key: key);
+  const CloseButton({Key key, this.color, this.size, this.onPressed})
+      : super(key: key);
 
   /// The color to use for the icon.
   ///
   /// Defaults to the [IconThemeData.color] specified in the ambient [IconTheme],
   /// which usually matches the ambient [Theme]'s [ThemeData.iconTheme].
   final Color color;
+
+  final double size;
 
   /// An override callback to perform instead of the default behavior which is
   /// to pop the [Navigator].
@@ -152,6 +156,7 @@ class CloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
     return IconButton(
+      iconSize: size ?? 30,
       icon: const Icon(Icons.close),
       color: color,
       tooltip: MaterialLocalizations.of(context).closeButtonTooltip,

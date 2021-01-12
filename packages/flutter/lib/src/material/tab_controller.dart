@@ -93,15 +93,20 @@ class TabController extends ChangeNotifier {
   ///
   /// The `initialIndex` must be valid given [length] and must not be null. If
   /// [length] is zero, then `initialIndex` must be 0 (the default).
-  TabController({ int initialIndex = 0, @required this.length, @required TickerProvider vsync })
-    : assert(length != null && length >= 0),
-      assert(initialIndex != null && initialIndex >= 0 && (length == 0 || initialIndex < length)),
-      _index = initialIndex,
-      _previousIndex = initialIndex,
-      _animationController = AnimationController.unbounded(
-        value: initialIndex.toDouble(),
-        vsync: vsync,
-      );
+  TabController(
+      {int initialIndex = 0,
+      @required this.length,
+      @required TickerProvider vsync})
+      : assert(length != null && length >= 0),
+        assert(initialIndex != null &&
+            initialIndex >= 0 &&
+            (length == 0 || initialIndex < length)),
+        _index = initialIndex,
+        _previousIndex = initialIndex,
+        _animationController = AnimationController.unbounded(
+          value: initialIndex.toDouble(),
+          vsync: vsync,
+        );
 
   // Private constructor used by `_copyWith`. This allows a new TabController to
   // be created without having to create a new animationController.
@@ -110,10 +115,9 @@ class TabController extends ChangeNotifier {
     int previousIndex,
     AnimationController animationController,
     @required this.length,
-  }) : _index = index,
-       _previousIndex = previousIndex,
-       _animationController = animationController;
-
+  })  : _index = index,
+        _previousIndex = previousIndex,
+        _animationController = animationController;
 
   /// Creates a new [TabController] with `index`, `previousIndex`, and `length`
   /// if they are non-null.
@@ -122,7 +126,7 @@ class TabController extends ChangeNotifier {
   ///
   /// When [DefaultTabController.length] is updated, this method is called to
   /// create a new [TabController] without creating a new [AnimationController].
-  TabController _copyWith({ int index, int length, int previousIndex }) {
+  TabController _copyWith({int index, int length, int previousIndex}) {
     return TabController._(
       index: index ?? _index,
       length: length ?? this.length,
@@ -150,24 +154,23 @@ class TabController extends ChangeNotifier {
   /// [TabBarView.children]'s length.
   final int length;
 
-  void _changeIndex(int value, { Duration duration, Curve curve }) {
+  void _changeIndex(int value, {Duration duration, Curve curve}) {
     assert(value != null);
     assert(value >= 0 && (value < length || length == 0));
     assert(duration != null || curve == null);
     assert(_indexIsChangingCount >= 0);
-    if (value == _index || length < 2)
-      return;
+    if (value == _index || length < 2) return;
     _previousIndex = index;
     _index = value;
     if (duration != null) {
       _indexIsChangingCount += 1;
       notifyListeners(); // Because the value of indexIsChanging may have changed.
       _animationController
-        .animateTo(_index.toDouble(), duration: duration, curve: curve)
-        .whenCompleteOrCancel(() {
-          _indexIsChangingCount -= 1;
-          notifyListeners();
-        });
+          .animateTo(_index.toDouble(), duration: duration, curve: curve)
+          .whenCompleteOrCancel(() {
+        _indexIsChangingCount -= 1;
+        notifyListeners();
+      });
     } else {
       _indexIsChangingCount += 1;
       _animationController.value = _index.toDouble();
@@ -211,7 +214,8 @@ class TabController extends ChangeNotifier {
   ///
   /// While the animation is running [indexIsChanging] is true. When the
   /// animation completes [offset] will be 0.0.
-  void animateTo(int value, { Duration duration = kTabScrollDuration, Curve curve = Curves.ease }) {
+  void animateTo(int value,
+      {Duration duration = kTabScrollDuration, Curve curve = Curves.ease}) {
     _changeIndex(value, duration: duration, curve: curve);
   }
 
@@ -228,8 +232,7 @@ class TabController extends ChangeNotifier {
     assert(value != null);
     assert(value >= -1.0 && value <= 1.0);
     assert(!indexIsChanging);
-    if (value == offset)
-      return;
+    if (value == offset) return;
     _animationController.value = value + _index.toDouble();
   }
 
@@ -314,10 +317,10 @@ class DefaultTabController extends StatefulWidget {
     @required this.length,
     this.initialIndex = 0,
     @required this.child,
-  }) : assert(initialIndex != null),
-       assert(length >= 0),
-       assert(length == 0 || (initialIndex >= 0 && initialIndex < length)),
-       super(key: key);
+  })  : assert(initialIndex != null),
+        assert(length >= 0),
+        assert(length == 0 || (initialIndex >= 0 && initialIndex < length)),
+        super(key: key);
 
   /// The total number of tabs.
   ///
@@ -347,7 +350,8 @@ class DefaultTabController extends StatefulWidget {
   /// ```
   /// {@end-tool}
   static TabController of(BuildContext context) {
-    final _TabControllerScope scope = context.dependOnInheritedWidgetOfExactType<_TabControllerScope>();
+    final _TabControllerScope scope =
+        context.dependOnInheritedWidgetOfExactType<_TabControllerScope>();
     return scope?.controller;
   }
 
@@ -355,7 +359,8 @@ class DefaultTabController extends StatefulWidget {
   _DefaultTabControllerState createState() => _DefaultTabControllerState();
 }
 
-class _DefaultTabControllerState extends State<DefaultTabController> with SingleTickerProviderStateMixin {
+class _DefaultTabControllerState extends State<DefaultTabController>
+    with SingleTickerProviderStateMixin {
   TabController _controller;
 
   @override
